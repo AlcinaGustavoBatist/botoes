@@ -1,0 +1,97 @@
+# botoes
+movimentação do quadrado com uso de botões
+<!--
+Programa: Movimentações com o uso de botões
+Nome: Gustavo Batista Santos - Nº: 13 - Turma: 2B
+DESCRIÇÃO: Este código cria uma interface simples onde um quadrado azul se move dentro de uma área limitada de 300x300 pixels. O movimento é controlado por botões direcionais ("Cima", "Baixo", "Esquerda", "Direita"). Ao pressionar um botão, o quadrado se move continuamente na direção correspondente, e o movimento para quando o botão é solto.
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimentação do Quadrado</title>
+    <style>
+        #area {
+            width: 300px; /* Largura da área */
+            height: 300px; /* Altura da área */
+            border: 2px solid black; /* Borda para visualizar a área */
+            position: relative; /* Para posicionar o quadrado dentro dela */
+            overflow: hidden; /* Para esconder o quadrado que sair da área */
+        }
+        #quadrado {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            position: absolute; /* Para permitir o movimento absoluto dentro da área */
+        }
+        button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="area">
+    <div id="quadrado"></div>
+</div>
+<div>
+    <button onmousedown="iniciarMovimento('cima')" onmouseup="pararMovimento()">Cima</button>
+    <button onmousedown="iniciarMovimento('baixo')" onmouseup="pararMovimento()">Baixo</button>
+    <button onmousedown="iniciarMovimento('esquerda')" onmouseup="pararMovimento()">Esquerda</button>
+    <button onmousedown="iniciarMovimento('direita')" onmouseup="pararMovimento()">Direita</button>
+</div>
+
+<script>
+    const quadrado = document.getElementById('quadrado');
+    const area = document.getElementById('area');
+    let posicao = { top: 0, left: 0 };
+    const passo = 2; // Tamanho do movimento em pixels
+    let movimentoAtivo = null; // Variável para armazenar o intervalo do movimento
+
+    // Função para iniciar o movimento
+    function iniciarMovimento(direcao) {
+        movimentoAtivo = setInterval(() => mover(direcao), 10);
+    }
+
+    // Função para parar o movimento
+    function pararMovimento() {
+        clearInterval(movimentoAtivo);
+    }
+
+    // Função para mover o quadrado
+    function mover(direcao) {
+        const areaHeight = area.clientHeight;
+        const areaWidth = area.clientWidth;
+        const quadradoHeight = quadrado.clientHeight;
+        const quadradoWidth = quadrado.clientWidth;
+
+        switch (direcao) {
+            case 'cima':
+                if (posicao.top - passo >= 0) {
+                    posicao.top -= passo;
+                }
+                break;
+            case 'baixo':
+                if (posicao.top + passo <= areaHeight - quadradoHeight) {
+                    posicao.top += passo;
+                }
+                break;
+            case 'esquerda':
+                if (posicao.left - passo >= 0) {
+                    posicao.left -= passo;
+                }
+                break;
+            case 'direita':
+                if (posicao.left + passo <= areaWidth - quadradoWidth) {
+                    posicao.left += passo;
+                }
+                break;
+        }
+        quadrado.style.top = posicao.top + 'px';
+        quadrado.style.left = posicao.left + 'px';
+    }
+</script>
+
+</body>
+</html
